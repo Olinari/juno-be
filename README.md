@@ -1,3 +1,3 @@
-# dunio
+# JUNO
 
 Whatsapp super bot
