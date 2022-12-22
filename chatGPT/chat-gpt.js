@@ -3,8 +3,8 @@
 export default async function example() {
   // use puppeteer to bypass cloudflare (headful because of captchas)
   const openAIAuth = await getOpenAIAuth({
-    email: "ariel@outs.fun",
-    password: "dadada123",
+    email: "",
+    password: "",
   });
 
   const api = new ChatGPTAPI({ ...openAIAuth });
