@@ -4,7 +4,7 @@ import { measureToxicity } from "../toxcity/toxicity.js";
 
 const { Client, Buttons } = wwb;
 
-export default function generateClient(isAdmin) {
+export default function generateClient({ phone, admin }) {
   const state = { haltNewQrs: false };
 
   const client = new Client({
@@ -24,8 +24,12 @@ export default function generateClient(isAdmin) {
     const { offensiveMessage, labels } = await measureToxicity(message.body);
 
     if (offensiveMessage) {
+      admin.sendMessage(
+        `${phone}@c.us`,
+        `Ariel's phone sent messages you should know about.`
+      );
       labels.forEach((label) => {
-        client.sendMessage(message.to, `Message contains ${label}`);
+        admin.sendMessage(`${phone}@c.us`, `Message contains ${label}`);
       });
     }
   });

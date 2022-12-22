@@ -6,14 +6,16 @@ import cors from "cors";
 const session = { isAdminConnected: false, isUserConnected: false };
 
 const initAdmin = async () => {
-  const { getQr, authenticateClient } = generateAdmin();
+  const { getQr, createAdmin } = generateAdmin();
   const authData = await getQr();
 
   if (authData) {
     console.log({ qr: authData });
-    session.isAdminConnected = await authenticateClient();
+    const { isConnected, admin } = await createAdmin();
+    session.isAdminConnected = isConnected;
     if (session.isAdminConnected) {
       console.log("Admin connected!");
+      return admin;
     }
   }
 };
@@ -21,17 +23,18 @@ const initAdmin = async () => {
 const app = express();
 app.use(cors());
 
-initAdmin();
+const admin = await initAdmin();
 
 app.get("/", (req, res) => {
   res.send("JUNO server online");
 });
 
 app.get("/auth", async (req, res) => {
-  if (session.isAdminConnected) {
+  if (session.isAdminConnected && admin) {
     try {
+      const phone = req.query.phone;
       session.isConnected = false;
-      const { getQr, authenticateClient } = generateClient();
+      const { getQr, authenticateClient } = generateClient({ phone, admin });
       const authData = await getQr();
 
       if (authData) {

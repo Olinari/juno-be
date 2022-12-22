@@ -14,10 +14,6 @@ export default function generateAdmin() {
     },
   });
 
-  admin.on("create_warning", async (data) => {
-    client.sendMessage(data.to, `Message contains ${data.severity}`);
-  });
-
   admin.initialize();
 
   return {
@@ -33,17 +29,17 @@ export default function generateAdmin() {
           });
         });
       }),
-    authenticateClient: () =>
+    createAdmin: () =>
       new Promise((resolve) => {
         if (!state.haltNewQrs) {
           state.haltNewQrs = true;
           const clearId = setTimeout(() => {
-            resolve(false);
+            resolve({ isConnected: false, admin: null });
           }, 60000);
           admin.once("ready", () => {
             state.haltNewQrs = false;
             clearTimeout(clearId);
-            resolve(true);
+            resolve({ isConnected: true, admin });
           });
         }
       }),
