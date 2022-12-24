@@ -8,6 +8,7 @@ const generateAdmin = ({ store }) => {
 
   const admin = new Client({
     authStrategy: new RemoteAuth({
+      clientId: "Admin",
       store: store,
       backupSyncIntervalMs: 60000,
     }),
