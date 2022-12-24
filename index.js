@@ -10,11 +10,16 @@ import cors from "cors";
 const server = { isAdminConnected: false };
 dotenv.config();
 
-await mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverApi: ServerApiVersion.v1,
-});
+try {
+  await mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
+  });
+  console.log("Mongo Connected");
+} catch (eroor) {
+  console.log(erro);
+}
 
 const store = new MongoStore({ mongoose: mongoose });
 
@@ -49,7 +54,6 @@ app.get("/connect-client", async (req, res) => {
   if (server.isAdminConnected && server.admin) {
     try {
       const phone = req.query.phone;
-      server.isConnected = false;
       const { getQr, authenticateClient } = generateClient({
         phone,
         store,

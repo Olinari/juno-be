@@ -1,3 +1,21 @@
+
+.idea
+.env
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+node_modules/
+.wwebjs_auth/
+.wwebjs_auth/*
+
+# Editor directories and files
+.vscode/
+.vscode/*
+!.vscode/extensions.json
+
 # Logs
 logs
 *.log
@@ -10,20 +28,11 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-node_modules/
-
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+#Whatsapp web
+RemoteAuth-Admin.zip
