@@ -1,0 +1,56 @@
+2022/12/23-22:44:33.567 10703 Creating DB /Users/arielolin/Documents/GitHub/juno-be/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb since it was missing.
+2022/12/23-22:44:33.624 10703 Reusing MANIFEST /Users/arielolin/Documents/GitHub/juno-be/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/12/23-22:44:33.780 10503 Level-0 table #5: started
+2022/12/23-22:44:33.799 10503 Level-0 table #5: 7006 bytes OK
+2022/12/23-22:44:33.857 10503 Delete type=0 #3
+2022/12/23-22:44:33.858 10503 Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2022/12/23-22:44:59.705 14d03 Level-0 table #7: started
+2022/12/23-22:44:59.737 14d03 Level-0 table #7: 1015420 bytes OK
+2022/12/23-22:44:59.774 14d03 Delete type=0 #4
+2022/12/23-22:45:04.661 6c03 Level-0 table #9: started
+2022/12/23-22:45:04.694 6c03 Level-0 table #9: 1322042 bytes OK
+2022/12/23-22:45:04.731 6c03 Delete type=0 #6
+2022/12/23-22:45:04.734 6c03 Compacting 1@0 + 1@1 files
+2022/12/23-22:45:04.814 6c03 Generated table #10@0: 41676 keys, 1819333 bytes
+2022/12/23-22:45:04.814 6c03 Compacted 1@0 + 1@1 files => 1819333 bytes
+2022/12/23-22:45:04.851 6c03 compacted to: files[ 0 1 1 0 0 0 0 ]
+2022/12/23-22:45:04.852 6c03 Delete type=2 #7
+2022/12/23-22:45:04.852 6c03 Delete type=2 #9
+2022/12/23-22:45:07.591 6c03 Level-0 table #12: started
+2022/12/23-22:45:07.627 6c03 Level-0 table #12: 1021799 bytes OK
+2022/12/23-22:45:07.668 6c03 Delete type=0 #8
+2022/12/23-22:45:07.674 6c03 Compacting 1@0 + 1@1 files
+2022/12/23-22:45:07.749 6c03 Generated table #13@0: 60703 keys, 2216093 bytes
+2022/12/23-22:45:07.749 6c03 Compacted 1@0 + 1@1 files => 2216093 bytes
+2022/12/23-22:45:07.786 6c03 compacted to: files[ 0 1 1 0 0 0 0 ]
+2022/12/23-22:45:07.786 6c03 Delete type=2 #12
+2022/12/23-22:45:07.787 6c03 Delete type=2 #10
+2022/12/23-22:45:10.270 6c03 Level-0 table #15: started
+2022/12/23-22:45:10.303 6c03 Level-0 table #15: 1077902 bytes OK
+2022/12/23-22:45:10.341 6c03 Delete type=0 #11
+2022/12/23-22:45:10.345 6c03 Compacting 1@0 + 1@1 files
+2022/12/23-22:45:10.421 6c03 Generated table #16@0: 69657 keys, 2266443 bytes
+2022/12/23-22:45:10.451 6c03 Generated table #17@0: 10949 keys, 570375 bytes
+2022/12/23-22:45:10.451 6c03 Compacted 1@0 + 1@1 files => 2836818 bytes
+2022/12/23-22:45:10.489 6c03 compacted to: files[ 0 2 1 0 0 0 0 ]
+2022/12/23-22:45:10.489 6c03 Delete type=2 #15
+2022/12/23-22:45:10.489 6c03 Delete type=2 #13
+2022/12/23-22:45:26.577 27c03 Level-0 table #19: started
+2022/12/23-22:45:26.616 27c03 Level-0 table #19: 1100984 bytes OK
+2022/12/23-22:45:26.654 27c03 Delete type=0 #14
+2022/12/23-22:45:26.655 27c03 Compacting 1@0 + 2@1 files
+2022/12/23-22:45:26.741 27c03 Generated table #20@0: 85613 keys, 2285411 bytes
+2022/12/23-22:45:26.782 27c03 Generated table #21@0: 24077 keys, 1223865 bytes
+2022/12/23-22:45:26.782 27c03 Compacted 1@0 + 2@1 files => 3509276 bytes
+2022/12/23-22:45:26.820 27c03 compacted to: files[ 0 2 1 0 0 0 0 ]
+2022/12/23-22:45:26.821 27c03 Delete type=2 #16
+2022/12/23-22:45:26.821 27c03 Delete type=2 #17
+2022/12/23-22:45:26.821 27c03 Delete type=2 #19
+2022/12/23-22:45:49.088 6c03 Level-0 table #23: started
+2022/12/23-22:45:49.121 6c03 Level-0 table #23: 1086842 bytes OK
+2022/12/23-22:45:49.165 6c03 Delete type=0 #18
+2022/12/23-22:45:49.174 10503 Compacting 1@0 + 2@1 files
+2022/12/23-22:45:49.268 10503 Generated table #24@0: 104484 keys, 2307184 bytes
+2022/12/23-22:45:49.318 10503 Generated table #25@0: 34735 keys, 1784691 bytes
+2022/12/23-22:45:49.318 10503 Compacted 1@0 + 2@1 files => 4091875 bytes
+2022/12/23-22:45:49.356 10503 compacted to: files[ 0 2 1 0 0 0 0 ]

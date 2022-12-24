@@ -1,45 +1,65 @@
 import express from "express";
+import { MongoStore } from "wwebjs-mongo";
+import mongoose from "mongoose";
+import { ServerApiVersion } from "mongodb";
 import generateClient from "./whatsapp-web/whatsapp-web-client.js";
 import generateAdmin from "./whatsapp-web/whatsapp-web-admin.js";
+import * as dotenv from "dotenv";
 import cors from "cors";
 
-const session = { isAdminConnected: false, isUserConnected: false };
+const server = { isAdminConnected: false };
+dotenv.config();
 
-const initAdmin = async () => {
-  const { getQr, createAdmin } = generateAdmin();
-  const authData = await getQr();
+await mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
 
-  if (authData) {
-    console.log({ qr: authData });
-    const { isConnected, admin } = await createAdmin();
-    session.isAdminConnected = isConnected;
-    if (session.isAdminConnected) {
-      console.log("Admin connected!");
-      return admin;
-    }
-  }
-};
+const store = new MongoStore({ mongoose: mongoose });
 
 const app = express();
 app.use(cors());
-
-const admin = await initAdmin();
 
 app.get("/", (req, res) => {
   res.send("JUNO server online");
 });
 
-app.get("/auth", async (req, res) => {
-  if (session.isAdminConnected && admin) {
+app.get("/admin", async (req, res) => {
+  const initAdmin = async () => {
+    const { getQr, createAdmin } = await generateAdmin({ store });
+    const authData = await getQr();
+
+    if (authData) {
+      console.log({ qr: authData });
+      const { isConnected, admin } = await createAdmin();
+      server.isAdminConnected = isConnected;
+      if (server.isAdminConnected) {
+        console.log("Admin connected!");
+
+        return admin;
+      }
+    }
+  };
+
+  server.admin = await initAdmin();
+});
+
+app.get("/connect-client", async (req, res) => {
+  if (server.isAdminConnected && server.admin) {
     try {
       const phone = req.query.phone;
-      session.isConnected = false;
-      const { getQr, authenticateClient } = generateClient({ phone, admin });
+      server.isConnected = false;
+      const { getQr, authenticateClient } = generateClient({
+        phone,
+        store,
+        admin: server.admin,
+      });
       const authData = await getQr();
 
       if (authData) {
         res.send({ qr: authData });
-        session.isConnected = await authenticateClient();
+        server.isConnected = await authenticateClient();
       }
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -50,7 +70,8 @@ app.get("/auth", async (req, res) => {
 });
 
 app.get("/secure-connection", async (req, res) => {
-  res.send({ connected: session.isConnected });
+  const phone = req.query.phone;
+  res.send({ connected: server.isConnected });
 });
 
 const PORT = process.env.PORT || 5501;

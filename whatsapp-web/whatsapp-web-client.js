@@ -2,7 +2,7 @@ import qrcode from "qrcode-terminal";
 import wwb from "whatsapp-web.js";
 import { measureToxicity } from "../toxcity/toxicity.js";
 
-const { Client, Buttons } = wwb;
+const { Client } = wwb;
 
 export default function generateClient({ phone, admin }) {
   const state = { haltNewQrs: false };

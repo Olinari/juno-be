@@ -1,17 +1,25 @@
 import qrcode from "qrcode-terminal";
 import wwb from "whatsapp-web.js";
-import { measureToxicity } from "../toxcity/toxicity.js";
 
-const { Client, Buttons } = wwb;
+const { Client, RemoteAuth } = wwb;
 
-export default function generateAdmin() {
+const generateAdmin = ({ store }) => {
   const state = { haltNewQrs: false };
 
   const admin = new Client({
+    authStrategy: new RemoteAuth({
+      store: store,
+      backupSyncIntervalMs: 60000,
+    }),
+
     puppeteer: {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     },
+  });
+
+  admin.on("authenticated", () => {
+    console.log("Admin Connected");
   });
 
   admin.initialize();
@@ -36,6 +44,7 @@ export default function generateAdmin() {
           const clearId = setTimeout(() => {
             resolve({ isConnected: false, admin: null });
           }, 60000);
+
           admin.once("ready", () => {
             state.haltNewQrs = false;
             clearTimeout(clearId);
@@ -44,4 +53,5 @@ export default function generateAdmin() {
         }
       }),
   };
-}
+};
+export default generateAdmin;
