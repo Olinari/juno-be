@@ -13,7 +13,6 @@ const generateAdmin = ({ store }) => {
       store: store,
       backupSyncIntervalMs: 60000,
     }), */
-
     puppeteer: {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
