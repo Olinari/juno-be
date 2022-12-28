@@ -1,7 +1,7 @@
 import express from "express";
 /* import MongoStore from "wwebjs-mongo"; */
-import mongoose from "mongoose";
-import { ServerApiVersion } from "mongodb";
+/* import mongoose from "mongoose";
+import { ServerApiVersion } from "mongodb"; */
 import generateClient from "./whatsapp-web/whatsapp-web-client.js";
 import generateAdmin from "./whatsapp-web/whatsapp-web-admin.js";
 import * as dotenv from "dotenv";
