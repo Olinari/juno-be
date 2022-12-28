@@ -18,7 +18,6 @@ const generateAdmin = ({ store }) => {
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     },
   });
-
   admin.initialize();
 
   return {
