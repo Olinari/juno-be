@@ -26,13 +26,13 @@
     "jsonwebtoken": "^9.0.0",
     "node-fetch": "^2.6.5",
     "nodemailer": "^6.8.0",
-    "nodemon": "^2.0.20",
     "path": "^0.12.7",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list"
   },
   "devDependencies": {
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "nodemon": "^2.0.20"
   },
   "engines": {
     "node": "^18.12.1"
