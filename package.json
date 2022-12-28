@@ -36,6 +36,9 @@
   "devDependencies": {
     "prettier": "^2.7.1"
   },
+  "engines": {
+    "node": "^18.12.1"
+  },
   "author": "Ariel Olin",
   "license": "ISC"
 }

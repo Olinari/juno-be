@@ -1,5 +1,5 @@
 import express from "express";
-import { MongoStore } from "wwebjs-mongo";
+/* import MongoStore from "wwebjs-mongo"; */
 import mongoose from "mongoose";
 import { ServerApiVersion } from "mongodb";
 import generateClient from "./whatsapp-web/whatsapp-web-client.js";
@@ -10,7 +10,7 @@ import cors from "cors";
 const server = { isAdminConnected: false, connectedUsers: {} };
 dotenv.config();
 
-try {
+/* try {
   await mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -19,9 +19,9 @@ try {
   console.log("Mongo Connected");
 } catch (eroor) {
   console.log(erro);
-}
+} */
 
-const store = new MongoStore({ mongoose: mongoose });
+/* const store = new MongoStore({ mongoose: mongoose }); */
 
 const app = express();
 app.use(cors());
@@ -36,7 +36,7 @@ app.get("/admin", async (req, res) => {
     return;
   }
   const initAdmin = async () => {
-    const { getQr, createAdmin } = await generateAdmin({ store });
+    const { getQr, createAdmin } = await generateAdmin({ store: null });
     const authData = await getQr();
 
     if (authData) {
