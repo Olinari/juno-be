@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import qrcode from "qrcode-terminal";
 import wwb from "whatsapp-web.js";
 
@@ -7,20 +8,16 @@ const generateAdmin = ({ store }) => {
   const state = { haltNewQrs: false };
 
   const admin = new Client({
-    authStrategy: new RemoteAuth({
+    /*   authStrategy: new RemoteAuth({
       clientId: "Admin",
       store: store,
       backupSyncIntervalMs: 60000,
-    }),
+    }), */
 
     puppeteer: {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     },
-  });
-
-  admin.on("authenticated", () => {
-    console.log("Admin Connected");
   });
 
   admin.initialize();
@@ -31,7 +28,16 @@ const generateAdmin = ({ store }) => {
         const clearId = setTimeout(() => {
           resolve(false);
         }, 60000);
+
+        admin.on("authenticated", () => {
+          console.log("already authenticated");
+          resolve(false);
+        });
+
         admin.once("qr", (qr) => {
+          if (state.isAuthenticated) {
+            resolve(false);
+          }
           qrcode.generate(qr, { small: true }, (qr) => {
             clearTimeout(clearId);
             resolve(qr);
@@ -46,7 +52,8 @@ const generateAdmin = ({ store }) => {
             resolve({ isConnected: false, admin: null });
           }, 60000);
 
-          admin.once("ready", () => {
+          admin.on("ready", () => {
+            console.log("ready");
             state.haltNewQrs = false;
             clearTimeout(clearId);
             resolve({ isConnected: true, admin });

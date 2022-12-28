@@ -7,7 +7,7 @@ import generateAdmin from "./whatsapp-web/whatsapp-web-admin.js";
 import * as dotenv from "dotenv";
 import cors from "cors";
 
-const server = { isAdminConnected: false };
+const server = { isAdminConnected: false, connectedUsers: {} };
 dotenv.config();
 
 try {
@@ -31,19 +31,25 @@ app.get("/", (req, res) => {
 });
 
 app.get("/admin", async (req, res) => {
+  if (server.admin) {
+    console.log("already connected");
+    return;
+  }
   const initAdmin = async () => {
     const { getQr, createAdmin } = await generateAdmin({ store });
     const authData = await getQr();
 
     if (authData) {
       console.log({ qr: authData });
-      const { isConnected, admin } = await createAdmin();
-      server.isAdminConnected = isConnected;
-      if (server.isAdminConnected) {
-        console.log("Admin connected!");
+    }
 
-        return admin;
-      }
+    const { isConnected, admin } = await createAdmin();
+
+    server.isAdminConnected = isConnected;
+    if (server.isAdminConnected) {
+      console.log("admin connected!");
+
+      return admin;
     }
   };
 
@@ -51,19 +57,19 @@ app.get("/admin", async (req, res) => {
 });
 
 app.get("/connect-client", async (req, res) => {
-  if (server.isAdminConnected && server.admin) {
+  if ("server.isAdminConnected && server.admin") {
     try {
       const phone = req.query.phone;
-      const { getQr, authenticateClient } = generateClient({
+      const { getQr, createClient } = generateClient({
         phone,
         store,
         admin: server.admin,
       });
       const authData = await getQr();
-
       if (authData) {
         res.send({ qr: authData });
-        server.isConnected = await authenticateClient();
+        const { isConnected, client } = await createClient();
+        server.connectedUsers[phone] = { isConnected, client };
       }
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -75,7 +81,25 @@ app.get("/connect-client", async (req, res) => {
 
 app.get("/secure-connection", async (req, res) => {
   const phone = req.query.phone;
-  res.send({ connected: server.isConnected });
+
+  res.send({ connected: server.connectedUsers[phone]?.isConnected });
+});
+
+app.get("/get-user-groups", async (req, res) => {
+  const phone = req.query.phone;
+  if (!server.connectedUsers[phone]) {
+    res.status(500).json({ message: "No such user" });
+    return;
+  }
+  try {
+    const chats = await server.connectedUsers[phone].client.getChats();
+
+    const groups = chats.filter((chat) => chat.isGroup);
+
+    res.send({ data: groups });
+  } catch (error) {
+    res.status(500).json({ message: "err" });
+  }
 });
 
 const PORT = process.env.PORT || 5501;
