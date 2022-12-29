@@ -17,8 +17,8 @@ try {
     serverApi: ServerApiVersion.v1,
   });
   console.log("Mongo Connected");
-} catch (eroor) {
-  console.log(erro);
+} catch (error) {
+  console.log(error);
 }
 
 /* const store = new MongoStore({ mongoose: node --inspect index.js }); */
