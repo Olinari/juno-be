@@ -10,7 +10,7 @@ import cors from "cors";
 const server = { isAdminConnected: false, connectedUsers: {} };
 dotenv.config();
 
-/* try {
+try {
   await mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -19,9 +19,9 @@ dotenv.config();
   console.log("Mongo Connected");
 } catch (eroor) {
   console.log(erro);
-} */
+}
 
-/* const store = new MongoStore({ mongoose: mongoose }); */
+/* const store = new MongoStore({ mongoose: node --inspect index.js }); */
 
 const app = express();
 app.use(cors());
@@ -62,7 +62,7 @@ app.get("/connect-client", async (req, res) => {
       const phone = req.query.phone;
       const { getQr, createClient } = generateClient({
         phone,
-        store,
+        store: null,
         admin: server.admin,
       });
       const authData = await getQr();
@@ -72,6 +72,7 @@ app.get("/connect-client", async (req, res) => {
         server.connectedUsers[phone] = { isConnected, client };
       }
     } catch (error) {
+      console.log(error);
       res.status(500).json({ message: error.message });
     }
   } else {
