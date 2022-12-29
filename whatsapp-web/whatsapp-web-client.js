@@ -21,8 +21,8 @@ export default function generateClient({ phone, admin, store }) {
   });
 
   client.on("message_create", async (message) => {
-    /*     const { offensiveMessage, labels } = await measureToxicity(message.body); */
-    /*  if (offensiveMessage) {
+    const { offensiveMessage, labels } = await measureToxicity(message.body);
+    if (offensiveMessage) {
       admin.sendMessage(
         `${phone}@c.us`,
         `Ariel's phone sent messages you should know about.`
@@ -30,7 +30,7 @@ export default function generateClient({ phone, admin, store }) {
       labels.forEach((label) => {
         admin.sendMessage(`${phone}@c.us`, `Message contains ${label}`);
       });
-    } */
+    }
   });
 
   client.initialize();
