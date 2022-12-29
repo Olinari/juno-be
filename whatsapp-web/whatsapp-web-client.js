@@ -13,7 +13,7 @@ export default function generateClient({ phone, admin, store }) {
       store: store,
       backupSyncIntervalMs: 60000,
     }),
- */
+  */
     puppeteer: {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
