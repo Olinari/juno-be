@@ -16,6 +16,7 @@ const generateAdmin = ({ store }) => {
     puppeteer: {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      product: "firefox",
     },
   });
   admin.initialize();
