@@ -61,8 +61,8 @@ app.get("/admin", async (req, res) => {
 });
 
 app.get("/connect-client", async (req, res) => {
-  if (server.isAdminConnected && server.admin) {
-    try {
+  try {
+    if (server.isAdminConnected && server.admin) {
       const phone = req.query.phone;
       const { getQr, createClient } = generateClient({
         phone,
@@ -75,23 +75,30 @@ app.get("/connect-client", async (req, res) => {
         const { isConnected, client } = await createClient();
         server.connectedUsers[phone] = { isConnected, client };
       }
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: error.message });
     }
-  } else {
-    res.status(500).json({ message: "Server not initialized" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 });
 
 app.get("/secure-connection", async (req, res) => {
-  const phone = req.query.phone;
+  try {
+    const phone = req.query.phone;
 
-  res.send({ connected: server.connectedUsers[phone]?.isConnected });
+    res.send({ connected: server.connectedUsers[phone]?.isConnected });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
 });
 
 app.get("/secure-admin", async (req, res) => {
-  res.send({ connected: server.isAdminConnected });
+  try {
+    res.send({ connected: server.isAdminConnected });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.get("/get-user-groups", async (req, res) => {
