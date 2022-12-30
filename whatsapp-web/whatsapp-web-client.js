@@ -8,11 +8,11 @@ export default function generateClient({ phone, admin, store }) {
   const state = { haltNewQrs: false };
 
   const client = new Client({
-    authStrategy: new RemoteAuth({
+    /*     authStrategy: new RemoteAuth({
       clientId: phone,
       store: store,
       backupSyncIntervalMs: 60000,
-    }),
+    }), */
 
     puppeteer: {
       headless: true,

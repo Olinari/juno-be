@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import qrcode from "qrcode-terminal";
 import wwb from "whatsapp-web.js";
 
@@ -8,11 +7,11 @@ const generateAdmin = ({ store }) => {
   const state = { haltNewQrs: false };
 
   const admin = new Client({
-    authStrategy: new RemoteAuth({
+    /*    authStrategy: new RemoteAuth({
       clientId: "Admin",
       store: store,
       backupSyncIntervalMs: 60000,
-    }),
+    }), */
     puppeteer: {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
