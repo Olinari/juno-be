@@ -13,7 +13,7 @@ export default function generateClient({ phone, admin, store }) {
       store: store,
       backupSyncIntervalMs: 60000,
     }),
-  */
+ */
     puppeteer: {
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -21,8 +21,8 @@ export default function generateClient({ phone, admin, store }) {
   });
 
   client.on("message_create", async (message) => {
-    const { offensiveMessage, labels } = await measureToxicity(message.body);
-    if (offensiveMessage) {
+    /*     const { offensiveMessage, labels } = await measureToxicity(message.body); */
+    /*  if (offensiveMessage) {
       admin.sendMessage(
         `${phone}@c.us`,
         `Ariel's phone sent messages you should know about.`
@@ -30,7 +30,7 @@ export default function generateClient({ phone, admin, store }) {
       labels.forEach((label) => {
         admin.sendMessage(`${phone}@c.us`, `Message contains ${label}`);
       });
-    }
+    } */
   });
 
   client.initialize();
@@ -42,7 +42,7 @@ export default function generateClient({ phone, admin, store }) {
           resolve(false);
         }, 60000);
 
-        client.on("authenticated", () => {
+        client.once("authenticated", () => {
           console.log("already authenticated");
           resolve(false);
         });
@@ -65,7 +65,7 @@ export default function generateClient({ phone, admin, store }) {
             resolve({ isConnected: false, client: null });
           }, 60000);
 
-          client.on("ready", () => {
+          client.once("ready", () => {
             console.log("ready");
             state.haltNewQrs = false;
             clearTimeout(clearId);
