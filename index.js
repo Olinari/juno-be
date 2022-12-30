@@ -60,7 +60,7 @@ app.get("/admin", async (req, res) => {
 });
 
 app.get("/connect-client", async (req, res) => {
-  if ("server.isAdminConnected && server.admin") {
+  if (server.isAdminConnected && server.admin) {
     try {
       const phone = req.query.phone;
       const { getQr, createClient } = generateClient({
