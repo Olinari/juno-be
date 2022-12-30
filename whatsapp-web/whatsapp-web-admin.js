@@ -22,19 +22,19 @@ const generateAdmin = ({ store }) => {
 
   return {
     getQr: () =>
-      new Promise((resolve) => {
+      new Promise((resolve, reject) => {
         const clearId = setTimeout(() => {
-          resolve(false);
+          reject(new Error("QR event wasn't emitted in 60 seconds."));
         }, 60000);
 
-        admin.on("authenticated", () => {
+        admin.once("authenticated", () => {
           console.log("already authenticated");
           resolve(false);
         });
 
         admin.once("qr", (qr) => {
           if (state.isAuthenticated) {
-            resolve(false);
+            reject(new Error("Admin aready exists!"));
           }
           qrcode.generate(qr, { small: true }, (qr) => {
             clearTimeout(clearId);
@@ -50,7 +50,7 @@ const generateAdmin = ({ store }) => {
             resolve({ isConnected: false, admin: null });
           }, 60000);
 
-          admin.on("ready", () => {
+          admin.once("ready", () => {
             console.log("ready");
             state.haltNewQrs = false;
             clearTimeout(clearId);
@@ -60,4 +60,31 @@ const generateAdmin = ({ store }) => {
       }),
   };
 };
-export default generateAdmin;
+
+export const connectAdmin = async () => {
+  {
+    if (server.admin) {
+      console.log("already connected");
+      return;
+    }
+    const initAdmin = async () => {
+      const { getQr, createAdmin } = await generateAdmin({ store: null });
+      const authData = await getQr();
+
+      if (authData) {
+        console.log({ qr: authData });
+      }
+
+      const { isConnected, admin } = await createAdmin();
+
+      server.isAdminConnected = isConnected;
+      if (server.isAdminConnected) {
+        console.log("admin connected!");
+
+        return admin;
+      }
+    };
+
+    server.admin = await initAdmin();
+  }
+};

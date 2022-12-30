@@ -32,7 +32,6 @@ app.get("/", (req, res) => {
 
 app.get("/admin", async (req, res) => {
   if (server.admin) {
-    console.log("already connected");
     return;
   }
   const initAdmin = async () => {
