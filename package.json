@@ -23,15 +23,17 @@
     "express": "^4.18.2",
     "heroku": "^7.67.1",
     "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.8.2",
     "node-fetch": "^2.6.5",
     "path": "^0.12.7",
     "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list"
+    "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list",
+    "wwebjs-mongo": "^1.1.0"
   },
   "devDependencies": {
-    "prettier": "^2.7.1",
+    "eslint": "^8.4.1",
     "nodemon": "^2.0.20",
-    "eslint": "^8.4.1"
+    "prettier": "^2.7.1"
   },
   "engines": {
     "node": "^18.12.1"

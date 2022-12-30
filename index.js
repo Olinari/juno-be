@@ -1,7 +1,7 @@
 import express from "express";
-/* import MongoStore from "wwebjs-mongo"; */
-/* import mongoose from "mongoose";
-import { ServerApiVersion } from "mongodb"; */
+import { MongoStore } from "wwebjs-mongo";
+import mongoose from "mongoose";
+import { ServerApiVersion } from "mongodb";
 import generateClient from "./whatsapp-web/whatsapp-web-client.js";
 import generateAdmin from "./whatsapp-web/whatsapp-web-admin.js";
 import * as dotenv from "dotenv";
@@ -9,7 +9,7 @@ import cors from "cors";
 
 const server = { isAdminConnected: false, connectedUsers: {} };
 dotenv.config();
-/* 
+
 try {
   await mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -20,8 +20,8 @@ try {
 } catch (error) {
   console.log(error);
 }
- */
-/* const store = new MongoStore({ mongoose: node --inspect index.js }); */
+
+const store = new MongoStore({ mongoose });
 
 const app = express();
 app.use(cors());
@@ -31,28 +31,32 @@ app.get("/", (req, res) => {
 });
 
 app.get("/admin", async (req, res) => {
-  if (server.admin) {
-    return;
+  try {
+    if (server.admin) {
+      return;
+    }
+    const initAdmin = async () => {
+      const { getQr, createAdmin } = await generateAdmin({ store });
+      const authData = await getQr();
+
+      if (authData) {
+        console.log({ qr: authData });
+      }
+
+      const { isConnected, admin } = await createAdmin();
+
+      server.isAdminConnected = isConnected;
+      if (server.isAdminConnected) {
+        console.log("admin connected!");
+
+        return admin;
+      }
+    };
+
+    server.admin = await initAdmin();
+  } catch (error) {
+    res.status(500).json({ message: error });
   }
-  const initAdmin = async () => {
-    const { getQr, createAdmin } = await generateAdmin({ store: null });
-    const authData = await getQr();
-
-    if (authData) {
-      console.log({ qr: authData });
-    }
-
-    const { isConnected, admin } = await createAdmin();
-
-    server.isAdminConnected = isConnected;
-    if (server.isAdminConnected) {
-      console.log("admin connected!");
-
-      return admin;
-    }
-  };
-
-  server.admin = await initAdmin();
 });
 
 app.get("/connect-client", async (req, res) => {
