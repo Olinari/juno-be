@@ -65,7 +65,7 @@ app.get("/connect-client", async (req, res) => {
       const phone = req.query.phone;
       const { getQr, createClient } = generateClient({
         phone,
-        store: null,
+        store,
         admin: server.admin,
       });
       const authData = await getQr();
