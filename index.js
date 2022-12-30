@@ -41,6 +41,7 @@ app.get("/admin", async (req, res) => {
 
       if (authData) {
         console.log({ qr: authData });
+        res.send({ qr: authData });
       }
 
       const { isConnected, admin } = await createAdmin();
@@ -87,6 +88,10 @@ app.get("/secure-connection", async (req, res) => {
   const phone = req.query.phone;
 
   res.send({ connected: server.connectedUsers[phone]?.isConnected });
+});
+
+app.get("/secure-admin", async (req, res) => {
+  res.send({ connected: server.isAdminConnected });
 });
 
 app.get("/get-user-groups", async (req, res) => {
