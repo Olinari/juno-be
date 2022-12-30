@@ -16,6 +16,7 @@ export default function generateClient({ phone, admin, store }) {
   */
     puppeteer: {
       headless: true,
+      product: "firefox",
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     },
   });
