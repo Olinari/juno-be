@@ -50,7 +50,7 @@ const generateAdmin = ({ store }) => {
             resolve({ isConnected: false, admin: null });
           }, 60000);
 
-          admin.once("ready", () => {
+          admin.on("ready", () => {
             console.log("ready");
             state.haltNewQrs = false;
             clearTimeout(clearId);
@@ -88,3 +88,4 @@ export const connectAdmin = async () => {
     server.admin = await initAdmin();
   }
 };
+export default generateAdmin;
